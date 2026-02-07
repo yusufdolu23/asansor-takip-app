@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+.env
+
+# Streamlit
+.streamlit/
+!/.streamlit/config.toml
+
+# MacOS
+.DS_Store
+
+# Project specific
+gsb_key.json
+supabase_config.json
+firebase_yedek*
+*.sh
+app_FINAL*.py
+YEDEK_BILGI.md
+UYGULAMA_PROMPT.md

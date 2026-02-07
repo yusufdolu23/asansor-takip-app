@@ -1,0 +1,8 @@
+streamlit
+supabase
+streamlit-option-menu
+pandas
+plotly
+bcrypt
+python-dotenv
+watchdog

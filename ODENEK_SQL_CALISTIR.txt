@@ -1,0 +1,44 @@
+ALTER TABLE maintenance_logs 
+ADD COLUMN IF NOT EXISTS bakim_servis_no TEXT;
+
+CREATE INDEX IF NOT EXISTS idx_maintenance_servis_no ON maintenance_logs(bakim_servis_no);
+
+-- Eğer eski tablo varsa, önce sil
+DROP TABLE IF EXISTS odenek_talepleri;
+
+-- Yeni yapıyla tabloyu oluştur
+CREATE TABLE odenek_talepleri (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  building_id UUID REFERENCES buildings(id) ON DELETE CASCADE NOT NULL,
+  elevator_id UUID REFERENCES elevators(id) ON DELETE CASCADE,
+  maintenance_id UUID REFERENCES maintenance_logs(id) ON DELETE SET NULL,
+  talep_eden_user_id UUID REFERENCES users(id) NOT NULL,
+  talep_tarihi TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  talep_hedefi TEXT DEFAULT 'il_mudurluk' CHECK (talep_hedefi IN ('il_mudurluk', 'ankara')),
+  
+  -- İl Müdürlük (Admin) Onayı
+  durum TEXT DEFAULT 'Beklemede' CHECK (durum IN ('Beklemede', 'Onaylandı', 'Reddedildi')),
+  onaylayan_user_id UUID REFERENCES users(id),
+  onay_tarihi TIMESTAMP WITH TIME ZONE,
+  onay_notu TEXT,
+  
+  -- Ankara'ya Bildirim
+  ankara_talep_tarihi TIMESTAMP WITH TIME ZONE,
+  ankara_talep_eden_user_id UUID REFERENCES users(id),
+  
+  -- Ankara Onayı
+  ankara_durum TEXT DEFAULT 'Beklemede' CHECK (ankara_durum IN ('Beklemede', 'Onaylandı', 'Reddedildi')),
+  ankara_onaylayan_user_id UUID REFERENCES users(id),
+  ankara_onay_tarihi TIMESTAMP WITH TIME ZONE,
+  ankara_onay_notu TEXT,
+  
+  tutar DECIMAL(10,2) NOT NULL,
+  aciklama TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_odenek_building ON odenek_talepleri(building_id);
+CREATE INDEX IF NOT EXISTS idx_odenek_elevator ON odenek_talepleri(elevator_id);
+CREATE INDEX IF NOT EXISTS idx_odenek_maintenance ON odenek_talepleri(maintenance_id);
+CREATE INDEX IF NOT EXISTS idx_odenek_durum ON odenek_talepleri(durum);
+CREATE INDEX IF NOT EXISTS idx_odenek_talep_eden ON odenek_talepleri(talep_eden_user_id);

@@ -1,0 +1,14 @@
+🔧 SUPABASE DASHBOARD'DAN ÇALIŞTIR:
+
+1. https://supabase.com/dashboard/project/dqyjainiwdeybwvecsil adresine git
+2. Sol menüden "SQL Editor" seç
+3. Aşağıdaki SQL'i yapıştır ve "Run" butonuna bas:
+
+-- Bakım kayıtlarına servis no kolonu ekle
+ALTER TABLE maintenance_logs 
+ADD COLUMN IF NOT EXISTS bakim_servis_no TEXT;
+
+-- İndeks ekle (hızlı arama için)
+CREATE INDEX IF NOT EXISTS idx_maintenance_servis_no ON maintenance_logs(bakim_servis_no);
+
+✅ "Success. No rows returned" yazısı görürseniz başarılı!
