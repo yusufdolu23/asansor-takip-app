@@ -1119,20 +1119,28 @@ if st.session_state.user_rol == 'bina_yetkilisi':
                         # Mesaj içeriğini hazırla
                         message_content = msg['message'].replace('\n', '<br>')
                         
+
+                        # Okundu bilgisi
+                        is_read = msg.get('is_read', False)
+                        read_status_html = f'<span style="background: #C6F6D5; color: #22543D; padding: 4px 8px; border-radius: 9999px; font-size: 12px; font-weight: 600;">✅ Okundu</span>' if is_read else f'<span style="background: #EDF2F7; color: #718096; padding: 4px 8px; border-radius: 9999px; font-size: 12px; font-weight: 600;">⏳ Okunmadı</span>'
+
                         # Tüm kartı tek HTML string olarak oluştur
                         card_html = f"""
 <div style="background: white; padding: 20px; border-radius: 12px; border-left: 4px solid #E30A17; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
-<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-<h4 style="margin: 0; color: #1A202C;">📧 {msg.get('subject', 'Konu yok')}</h4>
-<span style="color: #718096; font-size: 14px;">{format_tarih(msg['created_at'])}</span>
-</div>
-<div style="color: #4A5568; margin-bottom: 12px;">
-<strong>Alıcı:</strong> Yönetici
-</div>
-{elevator_info_html}
-<div style="background: #F7FAFC; padding: 12px; border-radius: 8px; color: #2D3748; line-height: 1.6; margin-bottom: 12px;">
-{message_content}
-</div>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <h4 style="margin: 0; color: #1A202C;">📧 {msg.get('subject', 'Konu yok')}</h4>
+        <div style="display: flex; align-items: center; gap: 10px;">
+            {read_status_html}
+            <span style="color: #718096; font-size: 14px;">{format_tarih(msg['created_at'])}</span>
+        </div>
+    </div>
+    <div style="color: #4A5568; margin-bottom: 12px;">
+        <strong>Alıcı:</strong> Yönetici
+    </div>
+    {elevator_info_html}
+    <div style="background: #F7FAFC; padding: 12px; border-radius: 8px; color: #2D3748; line-height: 1.6; margin-bottom: 12px;">
+        {message_content}
+    </div>
 </div>
 """
                         
@@ -3209,19 +3217,27 @@ elif selected == "💬 Mesajlar":
                     # Mesaj içeriğini hazırla
                     message_content = msg['message'].replace('\n', '<br>')
                     
+
+                    # Okundu bilgisi
+                    is_read = msg.get('is_read', False)
+                    read_status_html = f'<span style="background: #C6F6D5; color: #22543D; padding: 4px 8px; border-radius: 9999px; font-size: 12px; font-weight: 600;">✅ Okundu</span>' if is_read else f'<span style="background: #EDF2F7; color: #718096; padding: 4px 8px; border-radius: 9999px; font-size: 12px; font-weight: 600;">⏳ Okunmadı</span>'
+
                     # Tüm kartı tek HTML string olarak oluştur
                     card_html = f"""
 <div style="background: white; padding: 20px; border-radius: 12px; border-left: 4px solid #E30A17; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
-<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-<h4 style="margin: 0; color: #1A202C;">📧 {msg.get('subject', 'Konu yok')}</h4>
-<span style="color: #718096; font-size: 14px;">{format_tarih(msg['created_at'])}</span>
-</div>
-<div style="color: #4A5568; margin-bottom: 12px;">
-<strong>Alıcı:</strong> {receiver_name}
-</div>
-<div style="background: #F7FAFC; padding: 12px; border-radius: 8px; color: #2D3748; line-height: 1.6; margin-bottom: 12px;">
-{message_content}
-</div>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <h4 style="margin: 0; color: #1A202C;">📧 {msg.get('subject', 'Konu yok')}</h4>
+        <div style="display: flex; align-items: center; gap: 10px;">
+            {read_status_html}
+            <span style="color: #718096; font-size: 14px;">{format_tarih(msg['created_at'])}</span>
+        </div>
+    </div>
+    <div style="color: #4A5568; margin-bottom: 12px;">
+        <strong>Alıcı:</strong> {receiver_name}
+    </div>
+    <div style="background: #F7FAFC; padding: 12px; border-radius: 8px; color: #2D3748; line-height: 1.6; margin-bottom: 12px;">
+        {message_content}
+    </div>
 </div>
 """
                     
