@@ -697,7 +697,6 @@ if not st.session_state.logged_in:
 # --- 3. MENÜ ---
 with st.sidebar:
     st.markdown("""
-    st.markdown("""
         <div style='text-align: center; padding: 20px 0 10px 0;'>
             <div style="font-size: 40px; margin-bottom: 5px; line-height: 1;">🏢</div>
         </div>
