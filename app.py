@@ -697,12 +697,13 @@ if not st.session_state.logged_in:
 # --- 3. MENÜ ---
 with st.sidebar:
     st.markdown("""
-        <div style='text-align: center; padding: 20px 0;'>
-            <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Gen%C3%A7lik_ve_Spor_Bakanl%C4%B1%C4%9F%C4%B1_logo.png/600px-Gen%C3%A7lik_ve_Spor_Bakanl%C4%B1%C4%9F%C4%B1_logo.png' width='120'>
+    st.markdown("""
+        <div style='text-align: center; padding: 20px 0 10px 0;'>
+            <div style="font-size: 40px; margin-bottom: 5px; line-height: 1;">🏢</div>
         </div>
     """, unsafe_allow_html=True)
     
-    st.markdown("<h3 style='text-align: center; color: #667eea !important; font-weight: 700;'>🏢 ASANSÖR TAKİP</h3>", unsafe_allow_html=True)
+    st.markdown("<h3 style='text-align: center; color: #2D3748 !important; font-weight: 700; font-size: 20px; margin-top: 0;'>ASANSÖR TAKİP</h3>", unsafe_allow_html=True)
     
     # Kullanıcı bilgisi
     if st.session_state.user and isinstance(st.session_state.user, dict):
