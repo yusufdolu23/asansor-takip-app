@@ -642,14 +642,13 @@ if not st.session_state.logged_in:
         st.markdown("<div style='height: 5px;'></div>", unsafe_allow_html=True)
         
         # Login kartı
+        # Login kartı
         st.markdown("""
             <div style='background: white; padding: 20px 28px; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3);'>
-                <div style='text-align: center; margin-bottom: 15px;'>
-                    <div style='width: 50px; height: 50px; margin: 0 auto 10px auto; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);'>
-                        <span style='font-size: 26px;'>🏢</span>
-                    </div>
-                    <h1 style='color: #333; margin: 0 0 4px 0; font-size: 21px; font-weight: 700;'>Asansör Takip Sistemi</h1>
-                    <p style='color: #888; font-size: 11px; margin: 0;'>TC Gençlik ve Spor Bakanlığı</p>
+                <div style='text-align: center; margin-bottom: 20px;'>
+                    <div style='font-size: 80px; margin-bottom: 10px; line-height: 1;'>🏢</div>
+                    <h1 style='color: #2D3748; margin: 0 0 6px 0; font-size: 24px; font-weight: 700;'>Asansör Takip Sistemi</h1>
+                    <p style='color: #718096; font-size: 13px; margin: 0;'>TC Gençlik ve Spor Bakanlığı</p>
                 </div>
             </div>
         """, unsafe_allow_html=True)
