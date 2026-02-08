@@ -717,12 +717,23 @@ with st.sidebar:
     
     st.markdown("---")
     
+    # Okunmamış mesaj sayısını al
+    unread_count = 0
+    try:
+        ur_result = supabase.table('messages').select('id', count='exact').eq('receiver_id', st.session_state.user['id']).eq('is_read', False).execute()
+        if ur_result.count:
+            unread_count = ur_result.count
+    except:
+        pass
+    
+    msg_label = f"💬 Mesajlar ({unread_count})" if unread_count > 0 else "💬 Mesajlar"
+
     # Rol bazlı menü
     if st.session_state.user_rol == 'admin':
-        menu_options = ["Dashboard", "Envanter", "Firma Yönetimi", "Bakım İşlemleri", "💬 Mesajlar", "💰 Ödenek Talebi", "💰 Ödenek Yönetimi", "Raporlar", "Veri Yükleme", "👥 Kullanıcı Yönetimi", "📊 Aktivite Logu"]
+        menu_options = ["Dashboard", "Envanter", "Firma Yönetimi", "Bakım İşlemleri", msg_label, "💰 Ödenek Talebi", "💰 Ödenek Yönetimi", "Raporlar", "Veri Yükleme", "👥 Kullanıcı Yönetimi", "📊 Aktivite Logu"]
         menu_icons = ["speedometer2", "building", "briefcase", "tools", "chat-dots", "cash-coin", "wallet2", "bar-chart", "cloud-upload", "people", "activity"]
     else:
-        menu_options = ["Bakım Ekle", "Bakım Geçmişi", "💬 Mesajlar", "💰 Ödenek Talebi"]
+        menu_options = ["Bakım Ekle", "Bakım Geçmişi", msg_label, "💰 Ödenek Talebi"]
         menu_icons = ["plus-circle", "clock-history", "chat-dots", "cash-coin"]
     
     selected = option_menu(
@@ -993,7 +1004,7 @@ if st.session_state.user_rol == 'bina_yetkilisi':
         else:
             st.warning("⚠️ Henüz bakım kaydı yok.")
     
-    elif selected == "💬 Mesajlar":
+    elif "💬 Mesajlar" in selected:
         st.title("💬 Mesajlar")
         
         tab1, tab2, tab3 = st.tabs(["📥 Gelen Kutusu", "📤 Giden Kutusu", "✉️ Yeni Mesaj"])
