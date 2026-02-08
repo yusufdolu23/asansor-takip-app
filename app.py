@@ -1775,7 +1775,14 @@ if selected == "💰 Ödenek Talebi" and st.session_state.user_rol == 'admin':
 
 # === DASHBOARD (İNTERAKTİF VERSİYON) ===
 if selected == "Dashboard":
-    st.title("📊 İnteraktif Durum Paneli")
+    # DASHBOARD BAŞLIĞI - ÖZEL TASARIM
+    st.markdown("""
+        <div style="text-align: center; margin-bottom: 30px;">
+            <div style="font-size: 80px; margin-bottom: 10px; line-height: 1; animation: float 6s ease-in-out infinite;">📊</div>
+            <h1 style="color: #2D3748; font-size: 32px; font-weight: 800; margin: 0; letter-spacing: -1px;">İnteraktif Durum Paneli</h1>
+            <p style="color: #718096; font-size: 16px; margin-top: 5px;">Sistem Genel Bakış ve İstatistikler</p>
+        </div>
+    """, unsafe_allow_html=True)
     
     # Session State Başlatma
     if 'dashboard_view' not in st.session_state:
