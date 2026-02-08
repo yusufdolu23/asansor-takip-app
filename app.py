@@ -398,12 +398,24 @@ st.markdown("""
 @st.cache_resource
 def get_supabase_client():
     try:
-        with open('supabase_config.json', 'r') as f:
-            config = json.load(f)
-        return create_client(config['url'], config['key'])
+        # Önce Streamlit Secrets'a bak (Canlı Ortam)
+        if hasattr(st, "secrets") and "supabase" in st.secrets:
+            url = st.secrets["supabase"]["url"]
+            key = st.secrets["supabase"]["key"]
+            return create_client(url, key)
+        
+        # Yoksa yerel dosyaya bak (Geliştirme Ortamı)
+        elif os.path.exists("supabase_config.json"):
+            with open("supabase_config.json", "r") as f:
+                config = json.load(f)
+                return create_client(config["url"], config["key"])
+        
+        else:
+            st.error("Supabase konfigürasyonu bulunamadı! (secrets.toml veya supabase_config.json)")
+            return None
     except Exception as e:
-        st.error(f"🔥 Veritabanı Hatası: {e}")
-        st.stop()
+        st.error(f"Supabase bağlantı hatası: {str(e)}")
+        return None
 
 supabase = get_supabase_client()
 
