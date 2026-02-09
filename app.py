@@ -404,6 +404,12 @@ def get_supabase_client():
             key = st.secrets["supabase"]["key"]
             return create_client(url, key)
         
+        # Önce Environment Variables'a bak (Railway / Hugging Face Spaces)
+        elif os.environ.get("SUPABASE_URL") and os.environ.get("SUPABASE_KEY"):
+            url = os.environ.get("SUPABASE_URL")
+            key = os.environ.get("SUPABASE_KEY")
+            return create_client(url, key)
+            
         # Yoksa yerel dosyaya bak (Geliştirme Ortamı)
         elif os.path.exists("supabase_config.json"):
             with open("supabase_config.json", "r") as f:
@@ -411,7 +417,7 @@ def get_supabase_client():
                 return create_client(config["url"], config["key"])
         
         else:
-            st.error("Supabase konfigürasyonu bulunamadı! (secrets.toml veya supabase_config.json)")
+            st.error("Supabase konfigürasyonu bulunamadı! (secrets.toml, Environment Variables veya supabase_config.json)")
             return None
     except Exception as e:
         st.error(f"Supabase bağlantı hatası: {str(e)}")
